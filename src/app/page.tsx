@@ -25,20 +25,18 @@ const RICK_AND_MORTY_QUOTES = [
   "I'm sorry, but your opinion means very little to me."
 ];
 
-export default async function Home() {
-  const initialCharacters = await getCharacters();
-
-  console.log(initialCharacters);
+export default async function Home({ searchParams: { page } }: { searchParams: { page?: number } }) {
+  const { characters, pages } = await getCharacters(page);
 
   return (
     <>
-      <h1 className="mb-24 text-xl">
+      <h1 className="text-center text-4xl font-extrabold underline decoration-double">
         {RICK_AND_MORTY_QUOTES[Math.floor(Math.random() * RICK_AND_MORTY_QUOTES.length)]}
       </h1>
-      {initialCharacters.length === 0 ? (
+      {characters.length === 0 ? (
         <h1>What the fuck Morty? There&apos;s no characters Morty! you fucked up Morty!</h1>
       ) : (
-        <CharacterList initialCharacters={initialCharacters} />
+        <CharacterList initialCharacters={characters} pages={pages} />
       )}
     </>
   );
