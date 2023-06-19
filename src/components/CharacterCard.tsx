@@ -6,7 +6,7 @@ type Props = AugmentedCharacter;
 
 const CharacterCard: FC<Props> = ({ image, name, species, gender, origin, location, status, appearsIn }) => {
   return (
-    <div className="flex flex-col bg-white shadow-md transition hover:scale-110 hover:drop-shadow-xl">
+    <div className="flex flex-col bg-white shadow-md">
       <div className="relative aspect-square w-full">
         <Image src={image} alt="" fill />
       </div>

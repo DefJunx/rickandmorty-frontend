@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { FC, useState } from "react";
 import CharacterCard from "./CharacterCard";
+import CharacterCardSkeleton from "./CharacterCardSkeleton";
 
 type Props = {
   initialCharacters: AugmentedCharacter[];
@@ -17,10 +18,6 @@ const CharacterList: FC<Props> = ({ initialCharacters, pages }) => {
     queryKey: ["characters", page],
     queryFn: () => getCharacters(page)
   });
-
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
 
   return (
     <section className="flex gap-4">
@@ -36,9 +33,11 @@ const CharacterList: FC<Props> = ({ initialCharacters, pages }) => {
         </button>
       )}
       <div className="grid grow grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {(data?.characters ?? initialCharacters).map(char => (
-          <CharacterCard {...char} key={char.id} />
-        ))}
+        {true
+          ? Array(20)
+              .fill("_")
+              .map((_, i) => <CharacterCardSkeleton key={i} />)
+          : (data?.characters ?? initialCharacters).map(char => <CharacterCard {...char} key={char.id} />)}
       </div>
       {page < pages && (
         <button

@@ -26,7 +26,12 @@ export interface AugmentedCharacter {
   appearsIn: string[];
 }
 
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export async function getCharacters(page = 1): Promise<{ characters: AugmentedCharacter[]; pages: number }> {
+  await sleep(6000);
   const {
     status,
     data: { results: chars, info }
